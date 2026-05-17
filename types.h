@@ -38,7 +38,7 @@ typedef struct {
     Rectangle rec; // Raylib struct holding x, y, width and height
     float speed; //maximum speed movement
     float velY; //current velocity
-    float prevY; //Where the paddle was last frame (used to calculate ball spin)
+    float prevY; //Where the paddle was last frame (used to calculate ball spin
     int score;
     char name[MAX_NAME + 1];
     Color col; //Raylib struct for RGBA colours
