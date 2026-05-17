@@ -1,4 +1,7 @@
 #ifndef TYPES_H //Header Guard
+/*  in case main.c includes types.h and logic.c also includes types.h, the compiler might confuse with the dual definitions
+ *  Header guard prevents this by making sure that the file is only ever read once during compilation
+ */
 #define TYPES_H
 
 #include "raylib.h"
@@ -43,7 +46,7 @@ typedef struct {
 
 typedef struct {
     Vector2 pos; //position in x, y coordinate (Raylib structure)
-    Vector2 spd; //Veclocity in both x and y directions.
+    Vector2 spd; //Veclocity in both x and y directions
     int radius;
     bool fireball; //is the fireball powerup active?
     float fireTimer; // how much longer the fireball lasts
