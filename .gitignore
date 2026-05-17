@@ -1,0 +1,47 @@
+# =========================
+# CLion / JetBrains IDEs
+# =========================
+.idea/
+cmake-build-*/
+*.iml
+
+# =========================
+# CMake Build Artifacts
+# =========================
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+
+# =========================
+# Compiled Object Files
+# =========================
+*.o
+*.obj
+
+# =========================
+# Compiled Executables
+# =========================
+*.exe
+*.out
+*.app
+
+# =========================
+# OS-Specific Hidden Files
+# =========================
+# macOS
+.DS_Store
+# Windows
+Thumbs.db
+
+# =========================
+# Optional: Third-Party Libraries
+# =========================
+# If you DO NOT want to upload the entire raylib folder to GitHub
+# (to save space), uncomment the line below.
+# However, leaving it commented out means the library stays in your repo,
+# making it much easier for others to simply clone and run your game.
+raylib/
