@@ -31,6 +31,9 @@ void MovePaddle(Paddle *p, bool up, bool down, float dt) {
 }
 
 void UpdateBall(Ball *b, Paddle *left, Paddle *right, float dt) {
+    //record the trail
+    b->trail[b->trailHead] = b->pos;
+    b->trailHead = (b->trailHead + 1) % TRAIL_LEN;
     //Move the ball
     b->pos.x += b->spd.x * dt;
     b->pos.y += b->spd.y * dt;
