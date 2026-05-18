@@ -3,11 +3,14 @@
 //
 #include "graphics.h"
 #include "raylib.h"
+#include <math.h>
 
 // --- NEON PALETTE ---
 #define COL_BG        ((Color){  3,  3, 18, 255})
 #define COL_GRID      ((Color){ 14, 14, 48, 255})
 #define COL_UI        ((Color){  0, 255, 200, 255})
+#define COL_FIRE_O    ((Color){255, 110,   0, 255})  // deep orange
+#define COL_FIRE_Y    ((Color){255, 225,  50, 255})  // gold
 
 // Helper function to easily change the transparency (alpha) of a color
 static Color Alpha(Color c, unsigned char a) {
@@ -89,14 +92,28 @@ void DrawGame(Paddle *left, Paddle *right, Ball *ball) {
         // Calculate a fraction (0.0 to 1.0) based on how old this position is
         float frac = 1.0f - (float)i / TRAIL_LEN;
 
-        // Make the color fade out the older it gets
-        Color trailColor = WHITE;
+        // If fireball is true, use orange, otherwise use white
+        Color trailColor = ball->fireball ? COL_FIRE_O : WHITE;
         trailColor.a = (unsigned char)(frac * frac * 160.0f);
 
         // Draw the trail dot, scaling it down based on age
         DrawCircleV(ball->trail[idx], (float)ball->radius * frac * 0.85f, trailColor);
     }
-    DrawGlowCirc(ball->pos, ball->radius, WHITE);
+    // --- DRAW BALL ---
+    if (ball->fireball) {
+        // Create a cool pulsing effect using a sine wave
+        float pulse = sinf(GetTime() * 12.0f) * 0.25f + 0.75f;
+        float br = (float)ball->radius;
+
+        DrawCircleV(ball->pos, br*6.0f*pulse, Alpha(COL_FIRE_O, 12));
+        DrawCircleV(ball->pos, br*4.0f*pulse, Alpha(COL_FIRE_O, 28));
+        DrawCircleV(ball->pos, br*2.5f,        Alpha(COL_FIRE_Y, 70));
+        DrawCircleV(ball->pos, br*1.5f,        Alpha(COL_FIRE_Y, 155));
+        DrawCircleV(ball->pos, br,             COL_FIRE_O);
+        DrawCircleV(ball->pos, br*0.38f,       Alpha(WHITE, 240));
+    } else {
+        DrawGlowCirc(ball->pos, ball->radius, WHITE);
+    }
 
     EndDrawing();
 }
