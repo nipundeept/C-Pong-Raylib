@@ -81,6 +81,21 @@ void DrawGame(Paddle *left, Paddle *right, Ball *ball) {
     // 3. Draw Game Objects using our new neon helpers!
     DrawGlowRect(left->rec, left->col);
     DrawGlowRect(right->rec, right->col);
+    // --- DRAW TRAIL ---
+    for (int i = 1; i < TRAIL_LEN; i++) {
+        // Math to find the index of older positions in our circular buffer
+        int idx = (ball->trailHead - i + TRAIL_LEN) % TRAIL_LEN;
+
+        // Calculate a fraction (0.0 to 1.0) based on how old this position is
+        float frac = 1.0f - (float)i / TRAIL_LEN;
+
+        // Make the color fade out the older it gets
+        Color trailColor = WHITE;
+        trailColor.a = (unsigned char)(frac * frac * 160.0f);
+
+        // Draw the trail dot, scaling it down based on age
+        DrawCircleV(ball->trail[idx], (float)ball->radius * frac * 0.85f, trailColor);
+    }
     DrawGlowCirc(ball->pos, ball->radius, WHITE);
 
     EndDrawing();
